@@ -11,7 +11,7 @@ app.use(express.json());
 // MongoDB Database se Connection
 // 'mern-crud' hamare database ka naam hai
 mongoose
-  .connect("mongodb://127.0.0.1:27017/mern-crud")
+  .connect("mongodb://127.0.0.1:27017/prat-crud")
   .then(() => console.log("MongoDB se kamyabi se connect ho gaya!"))
   .catch((err) => console.log("Database Error: ", err));
 
