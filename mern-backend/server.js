@@ -11,13 +11,14 @@ app.use(express.json());
 // MongoDB Database se Connection
 // 'mern-crud' hamare database ka naam hai
 mongoose
-  .connect("mongodb://127.0.0.1:27017/prat-crud")
-  .then(() => console.log("MongoDB se kamyabi se connect ho gaya!"))
+  .connect("mongodb://127.0.0.1:27017/mern-crud")
+  .then(() => console.log("MongoDB successfully connected!"))
   .catch((err) => console.log("Database Error: ", err));
 
 // Schema aur Model
 const UserSchema = new mongoose.Schema({
   name: String,
+  email: String,
   age: Number,
   city: String,
 });
@@ -56,10 +57,6 @@ app.delete("/api/users/:id", async (req, res) => {
   }
 });
 
-app.listen(5000, () => {
-  console.log("Server port 5000 par chal raha hai");
-});
-
 // 4. UPDATE - Existing user update karna
 app.put("/api/users/:id", async (req, res) => {
   try {
@@ -68,9 +65,14 @@ app.put("/api/users/:id", async (req, res) => {
       req.body,
       { new: true }
     );
-
+    
     res.json(updatedUser);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+});
+
+
+app.listen(5000, () => {
+  console.log("Server port 5000 par chal raha hai");
 });

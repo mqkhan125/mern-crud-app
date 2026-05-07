@@ -6,6 +6,7 @@ function App() {
 
   const [formData, setFormData] = useState({
     name: "",
+    email: "",
     age: "",
     city: "",
   });
@@ -28,9 +29,11 @@ function App() {
 
   // HANDLE INPUT
   const handleChange = (e) => {
+    const value = e.target.value
+    const name = e.target.name
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
   };
 
@@ -43,7 +46,7 @@ function App() {
       if (editingId) {
         await axios.put(
           `http://localhost:5000/api/users/${editingId}`,
-          formData
+          formData,
         );
 
         setEditingId(null);
@@ -55,6 +58,7 @@ function App() {
 
       setFormData({
         name: "",
+        email: "",
         age: "",
         city: "",
       });
@@ -79,6 +83,7 @@ function App() {
   const editUser = (user) => {
     setFormData({
       name: user.name,
+      email: user.email,
       age: user.age,
       city: user.city,
     });
@@ -89,9 +94,7 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-3xl mx-auto bg-white p-6 rounded-xl shadow-lg">
-        <h1 className="text-3xl font-bold text-center mb-6">
-          MERN CRUD App
-        </h1>
+        <h1 className="text-3xl font-bold text-center mb-6">MERN CRUD App</h1>
 
         {/* FORM */}
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -100,6 +103,15 @@ function App() {
             name="name"
             placeholder="Enter Name"
             value={formData.name}
+            onChange={handleChange}
+            className="w-full border p-3 rounded-lg"
+          />
+
+          <input
+            type="text"
+            name="email"
+            placeholder="Enter Email"
+            value={formData.email}
             onChange={handleChange}
             className="w-full border p-3 rounded-lg"
           />
@@ -139,6 +151,7 @@ function App() {
             >
               <div>
                 <h2 className="text-xl font-semibold">{user.name}</h2>
+                <p>Email: {user.email}</p>
                 <p>Age: {user.age}</p>
                 <p>City: {user.city}</p>
               </div>
